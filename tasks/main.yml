@@ -1,0 +1,24 @@
+---
+# tasks file for tmux
+- name: Install tmux
+  become: yes
+  become_user: root
+  apt:
+    name: tmux
+    state: latest
+    update_cache: yes
+
+- name: Copy Tmux Config
+  copy:
+    src: .tmux.conf
+    dest: ~/.tmux.conf
+
+- name: Install TPM tmux plugins
+  shell: |
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ~/.tmux/plugins/tpm/bin/install_plugins
+
+
+# - debug: msg="trigger Debug"
+#   notify: Copy Tmux Config
+#   changed_when: true
